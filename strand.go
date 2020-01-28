@@ -9,10 +9,9 @@ import (
 const alphaLower = "abcdefghijklmnopqrstuvwxyz"
 const alphaUpper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 const alpha = alphaUpper + alphaLower
-const numeric = "01234567890"
+const numeric = "0123456789"
 const special = "+-*/#!|@$%^&*_~`,.:;?=(){}[]<>"
 const urlsafe = "-_~."
-const binary = "01"
 
 func charMap() map[string]bool {
 	m := make(map[string]bool)
@@ -72,12 +71,12 @@ func URLSafe(length int) string {
 
 // Hex generates random string of Hexadecimal characters
 func Hex(length int) string {
-	return random(length, alphaLower+numeric)
+	return random(length, alphaLower[0:6]+numeric)
 }
 
 // Binary generates random string of binary digits
 func Binary(length int) string {
-	return random(length, binary)
+	return random(length, numeric[0:2])
 }
 
 // From the provided charset generate
