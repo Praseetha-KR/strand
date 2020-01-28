@@ -6,10 +6,13 @@ import (
 	"time"
 )
 
-const alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvwxyz"
+const alphaLower = "abcdefghijklmnopqrstuvwxyz"
+const alphaUpper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+const alpha = alphaUpper + alphaLower
 const numeric = "01234567890"
 const special = "+-*/#!|@$%^&*_~`,.:;?=(){}[]<>"
 const urlsafe = "-_~."
+const binary = "01"
 
 func charMap() map[string]bool {
 	m := make(map[string]bool)
@@ -23,49 +26,69 @@ func charMap() map[string]bool {
 var supportedChars = charMap()
 var rseed = rand.New(rand.NewSource(time.Now().UnixNano()))
 
-// randomString creates a string with random chars from charset
-func randomString(l int, charset string) string {
-	arr := make([]byte, l)
+// random string from charset
+func random(length int, charset string) string {
+	arr := make([]byte, length)
 	for i := range arr {
 		arr[i] = charset[rseed.Intn(len(charset))]
 	}
 	return string(arr)
 }
 
-// String generates random string of all characters
+// String generates random string of all supported characters
 func String(length int) string {
-	return randomString(length, alpha+numeric+special)
+	return random(length, alpha+numeric+special)
 }
 
-// Alpha generates random string of numbers
+// Alpha generates random string of alphabet
 func Alpha(length int) string {
-	return randomString(length, alpha)
+	return random(length, alpha)
 }
 
-// Numeric generates random string of numbers
+// AlphaLower generates random string of alphabets lowercase
+func AlphaLower(length int) string {
+	return random(length, alphaLower)
+}
+
+// AlphaUpper generates random string of alphabets uppercase
+func AlphaUpper(length int) string {
+	return random(length, alphaUpper)
+}
+
+// Numeric generates random string of digits
 func Numeric(length int) string {
-	return randomString(length, numeric)
+	return random(length, numeric)
 }
 
-// AlphaNumeric generates random string of alphabet & numbers
+// AlphaNumeric generates random string of alphabet & digits
 func AlphaNumeric(length int) string {
-	return randomString(length, alpha+numeric)
+	return random(length, alpha+numeric)
 }
 
 // URLSafe generates random string of url-safe characters
 func URLSafe(length int) string {
-	return randomString(length, alpha+numeric+urlsafe)
+	return random(length, alpha+numeric+urlsafe)
 }
 
-// RandomFrom generates random string from the provided charset
-func RandomFrom(charset string, length int) (string, error) {
-	if len(charset) == 0 {
-		return "", errors.New("strand: empty charset")
+// Hex generates random string of Hexadecimal characters
+func Hex(length int) string {
+	return random(length, alphaLower+numeric)
+}
+
+// Binary generates random string of binary digits
+func Binary(length int) string {
+	return random(length, binary)
+}
+
+// From the provided charset generate
+func From(characters string, length int) (string, error) {
+	if len(characters) == 0 {
+		return "", errors.New("strand: empty characters")
 	}
-	for _, c := range charset {
+	for _, c := range characters {
 		if _, ok := supportedChars[string(c)]; !ok {
 			return "", errors.New("strand: unsupported character " + string(c))
 		}
 	}
-	return randomString(length, charset), nil
+	return random(length, characters), nil
 }
