@@ -3,7 +3,6 @@ package strand
 import (
 	"errors"
 	"math/rand"
-	"strings"
 	"time"
 )
 
@@ -64,8 +63,8 @@ func RandomFrom(charset string, length int) (string, error) {
 		return "", errors.New("strand: empty charset")
 	}
 	for _, c := range charset {
-		if !strings.Contains(charset, string(c)) {
-			return "", errors.New("strand: unsupported character in charset")
+		if _, ok := supportedChars[string(c)]; !ok {
+			return "", errors.New("strand: unsupported character " + string(c))
 		}
 	}
 	return randomString(length, charset), nil
