@@ -54,14 +54,24 @@ func AlphaUpper(length int) string {
 	return random(length, alphaUpper)
 }
 
-// Numeric generates random string of digits
-func Numeric(length int) string {
-	return random(length, numeric)
-}
-
 // AlphaNumeric generates random string of alphabet & digits
 func AlphaNumeric(length int) string {
 	return random(length, alpha+numeric)
+}
+
+// AlphaLowerNumeric generates random string of lowercase alphabets & digits
+func AlphaLowerNumeric(length int) string {
+	return random(length, alphaLower+numeric)
+}
+
+// AlphaUpperNumeric generates random string of uppercase alphabets & digits
+func AlphaUpperNumeric(length int) string {
+	return random(length, alphaUpper+numeric)
+}
+
+// Numeric generates random string of digits
+func Numeric(length int) string {
+	return random(length, numeric)
 }
 
 // URLSafe generates random string of url-safe characters
