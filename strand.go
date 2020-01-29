@@ -89,6 +89,34 @@ func Binary(length int) string {
 	return random(length, numeric[0:2])
 }
 
+// SimplePassword generates password of length 8
+func SimplePassword() string {
+	return shuffle(random(2, special) + random(2, alphaLower) + random(2, numeric) + random(2, alphaUpper))
+}
+
+// URLSafeSimplePassword generates url-safe  password of length 8
+func URLSafeSimplePassword() string {
+	return shuffle(random(2, urlsafe) + random(2, alphaLower) + random(2, numeric) + random(2, alphaUpper))
+}
+
+// Password generates password of length range (12, 40)
+func Password() string {
+	b1 := randSizedString(3, 6, special)
+	b2 := randSizedString(3, 10, numeric)
+	b3 := randSizedString(3, 14, alphaLower)
+	b4 := randSizedString(3, 10, alphaUpper)
+	return shuffle(b1 + b3 + b2 + b4)
+}
+
+// URLSafePassword generates url-safe password of length range (12, 40)
+func URLSafePassword() string {
+	b1 := randSizedString(3, 6, urlsafe)
+	b2 := randSizedString(3, 10, numeric)
+	b3 := randSizedString(3, 14, alphaLower)
+	b4 := randSizedString(3, 10, alphaUpper)
+	return shuffle(b1 + b3 + b2 + b4)
+}
+
 // From the provided charset generate
 func From(characters string, length int) (string, error) {
 	if len(characters) == 0 {
