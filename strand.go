@@ -10,7 +10,7 @@ const alphaLower = "abcdefghijklmnopqrstuvwxyz"
 const alphaUpper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 const alpha = alphaUpper + alphaLower
 const numeric = "0123456789"
-const special = "+-*/#!|@$%^&*_~`,.:;?=(){}[]<>"
+const special = "+-*/#!|@$%^&_~`,.:;?=(){}[]<>"
 const urlsafe = "-_~."
 
 func charMap() map[string]bool {
@@ -27,6 +27,9 @@ var rseed = rand.New(rand.NewSource(time.Now().UnixNano()))
 
 // random string from charset
 func random(length int, charset string) string {
+	if length <= 0 {
+		return ""
+	}
 	arr := make([]byte, length)
 	for i := range arr {
 		arr[i] = charset[rseed.Intn(len(charset))]
@@ -121,6 +124,9 @@ func URLSafePassword() string {
 func From(characters string, length int) (string, error) {
 	if len(characters) == 0 {
 		return "", errors.New("strand: empty characters")
+	}
+	if length < 0 {
+		return "", errors.New("strand: length should be greater than 0")
 	}
 	for _, c := range characters {
 		if _, ok := supportedChars[string(c)]; !ok {
