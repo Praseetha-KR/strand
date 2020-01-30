@@ -7,7 +7,7 @@ import (
 	"testing"
 	"unicode"
 
-	"gotest.tools/assert"
+	"gotest.tools/v3/assert"
 )
 
 func TestString(t *testing.T) {
