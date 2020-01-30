@@ -1,7 +1,7 @@
 # strand
 
 [![GoDoc](https://godoc.org/github.com/Praseetha-KR/strand?status.svg)](https://godoc.org/github.com/Praseetha-KR/strand)
-
+[![GitHub Actions status](https://github.com/Praseetha-KR/strand/workflows/Test/badge.svg)](https://github.com/Praseetha-KR/strand/actions)
 
 #### A tiny go package for generating random strings
 
